@@ -26,6 +26,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'pg', '~> 0.18.3'
 
+# API
+gem 'grape', '~> 0.13.0'
+gem 'grape_logging', '~> 1.1', '>= 1.1.2'
+gem 'grape-swagger', '~> 0.10.2'
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.2.0'
 # File upload
