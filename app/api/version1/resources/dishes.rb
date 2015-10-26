@@ -21,8 +21,8 @@ module API
         params do
           group :dish, type: Hash do
             requires :title, :type => String, :desc => "Title"
-            requires :price, :type => Float, :desc => "price"
-            requires :description, :type => String, :desc => "description"
+            requires :price, :type => Float, :desc => "Price"
+            requires :description, :type => String, :desc => "Description"
             requires :category_id, :type => Integer, :desc => "Category"
           end
         end
@@ -41,11 +41,32 @@ module API
           end
         end
 
+        desc "Edit a Dish"
+        params do
+          group :dish, type: Hash do
+            optional :title, :type => String, :desc => "Title"
+            optional :price, :type => Float, :desc => "Price"
+            optional :description, :type => String, :desc => "Description"
+            optional :category_id, :type => Integer, :desc => "Category"
+          end
+        end
+        put '/:id' do
+          @dish = Dish.find(params[:id])
+          safe_params = clean_params(params).require(:dish).permit(:title, 
+                                                                   :price, 
+                                                                   :description, 
+                                                                   :category_id)
+          if @dish.update_attributes(safe_params)
+            @dish
+          end
+        end
+
         desc "Return dish info"
         get "/:id" do
           @dish = Dish.find(params[:id])
           @dish
         end
+
         desc "Delete dish"
         delete "/:id" do
           @dish = Dish.find(params[:id])
