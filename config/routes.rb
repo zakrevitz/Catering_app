@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  mount API::Engine => "api"
+  mount API::Engine => '/api'
 
   get 'registration/sign_up_params'
 

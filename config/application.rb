@@ -22,7 +22,8 @@ module Catering
 
     #config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     #config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
-
+    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.generators do |g|

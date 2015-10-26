@@ -30,6 +30,8 @@ gem 'pg', '~> 0.18.3'
 gem 'grape', '~> 0.13.0'
 gem 'grape_logging', '~> 1.1', '>= 1.1.2'
 gem 'grape-swagger', '~> 0.10.2'
+gem 'grape-rails-routes'
+gem 'swagger-ui_rails'
 
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.2.0'

@@ -8,3 +8,8 @@
     = link_to 'Войти', new_user_session_path
     |или 
     = link_to 'Зарегистрироваться', new_user_registration_path
+
+    center
+      h1
+        | ТЕСТОВЫЙ ВАРИАНТ ДОКУМЕНТАЦИИ ПО API
+    = render 'swagger_ui/swagger_ui', discovery_url: 'api/v1/doc.json'
