@@ -32,5 +32,6 @@ module Catering
         g.stylesheets false
         g.javascripts false
     end
+
   end
 end

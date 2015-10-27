@@ -6,10 +6,9 @@ Rails.application.routes.draw do
 
   get 'registration/account_update_params'
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
-  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  devise_for :users, :controllers => { registrations: 'registrations' }
   root to: "home#index"
 
   #get 'persons/profile', as: 'user_root'
