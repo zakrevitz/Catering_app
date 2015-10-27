@@ -22,8 +22,9 @@ class Sprint < ActiveRecord::Base
       transitions :from => :pending, :to => :started
     end
 
-    event :finish do
+    event :close do
       transitions :from => :started, :to => :closed
+      transitions :from => :pending, :to => :closed
     end
     event :pend do
       transitions :from => :started, :to => :pending

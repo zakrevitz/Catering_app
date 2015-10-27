@@ -1,15 +1,7 @@
 ActiveAdmin.register_page "Dashboard" do
 
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
-
   content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
-    end
-
      columns do
        column do
          panel "Recent Dishes" do
@@ -21,6 +13,8 @@ ActiveAdmin.register_page "Dashboard" do
          end
        end
 
+       
+
        column do
          panel "Recent Categoties" do
            ul do
@@ -30,25 +24,15 @@ ActiveAdmin.register_page "Dashboard" do
            end
          end
        end
-     end
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
 
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
-  end # content
+       column do
+         panel "Sprints" do
+         #.where('due_date > ? and due_date < ?', Time.now, 1.week.from_now) do |t|
+           table_for Sprint.all do |t|
+             t.column("Title") { |sprint| link_to sprint.title, admin_sprint_path(sprint) }
+           end
+         end
+       end
+     end #columns
+  end # contents
 end
