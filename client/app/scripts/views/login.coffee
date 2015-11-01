@@ -22,7 +22,8 @@ define [
 
     submit: (event) ->
       $('[type=submit]', event.currentTarget).val('Loading...').prop('disabled', true)
-      _params = $(event.currentTarget).serialize()
+      #_params = $(event.currentTarget).serialize()
+      _params = {email: $("#login_email").val(), password: $("#login_password").val()}
       Session.login(_params)
 
       return false

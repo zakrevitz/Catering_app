@@ -22,14 +22,15 @@ define [
     defaults: {}
 
     login: (params) ->
+      # {email: "ivan@ivan.ivan", password: "1234567890"}
       this.save(params, 
         success: (model, response) ->
-          console.log model
+          console.log "SUCCESS"
         error: (model, response) ->
-          console.log model, response
+          console.log "ERROR", response
       )
        #Just for testing
-       #this.set({auth: true, auth_token: 'test', name: 'Ivan Dron'})
+      #this.set({auth: true, name: 'Ivan Dron'})
 
     logout: (params) ->
       self = this
@@ -39,7 +40,7 @@ define [
           model.clear()
           model.id = null
 
-          self.set({auth: false, auth_token: null, name: null})
+          self.set({auth: false, name: null})
       )
 
     getAuth: (callback) ->
