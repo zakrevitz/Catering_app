@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# CORS support for Grape::API
+gem 'rack-cors', :require => 'rack/cors'
 gem 'pg', '~> 0.18.3'
 
 # API
@@ -31,7 +33,9 @@ gem 'grape', '~> 0.13.0'
 gem 'grape_logging', '~> 1.1', '>= 1.1.2'
 gem 'grape-swagger', '~> 0.10.2'
 gem 'grape-rails-routes'
+gem 'grape_devise', '~> 0.1.1'
 gem 'swagger-ui_rails'
+
 
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.2.0'
