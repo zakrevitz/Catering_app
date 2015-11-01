@@ -5,6 +5,11 @@ module API
     version 'v1', using: :path
 
       resource :dishes do
+        
+        before do
+          error!("401 Unauthorized", 401) unless user_signed_in?
+        end
+
         desc "Returns sorted dishes"
         get "/" do
           Dish.order(id: :desc).all

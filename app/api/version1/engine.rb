@@ -4,7 +4,8 @@ module API
   autoload :Helpers, 'version1/resources/helpers'
   autoload :Dishes, 'version1/resources/dishes'
   autoload :Dailymenus, 'version1/resources/daily_menus'
-  autoload :Sprints, 'version1/resources/sprints'  
+  autoload :Sprints, 'version1/resources/sprints'
+  autoload :Sessions, 'version1/resources/sessions'  
   class Engine < ::Grape::API
     format :json
     default_format :json
@@ -13,10 +14,10 @@ module API
     version 'v1', using: :path
 
     use ActionDispatch::RemoteIp
-    helpers API::Version1::Helpers
 
     mount API::Version1::Dishes
     mount API::Version1::Sprints
+    mount API::Version1::Sessions
     mount API::Version1::Dailymenus
     add_swagger_documentation base_path: "/api", 
                               hide_documentation_path: true, 

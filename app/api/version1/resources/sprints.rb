@@ -17,6 +17,9 @@ module API
     version 'v1', using: :path
 
       resource :sprints do
+        before do
+          error!("401 Unauthorized", 401) unless user_signed_in?
+        end
         desc "Returns sorted sprints"
         get "/" do
           Sprint.order(id: :desc).all
@@ -55,40 +58,12 @@ module API
           end
         end
 
-        #desc "Edit a Sprint"
-        #params do
-        #  group :sprint, type: Hash do
-        #    optional :title, :type => String, :desc => "Title"
-        #    optional :started_at, :type => DateTime,  :desc => "Starting date"
-        #    optional :finished_at, :type => DateTime, :desc => "Ending date"
-        #    optional :aasm_state, :type => String , default: 'pending',
-        #                                              values: ['pending', 'started', 'closed'],
-        #                                              :desc => "Status"
-        #  end
-        #end
-        #put '/:id' do
-        #  @sprint = Sprint.find(params[:id])
-        #  safe_params = clean_params(params).require(:sprint).permit(:title, 
-        #                                                           :started_at, 
-        #                                                           :finished_at, 
-        #                                                           :aasm_state)
-        #  if @sprint.update_attributes(safe_params)
-        #    @sprint
-        #  end
-        #end
 
         desc "Return sprint info"
         get "/:id" do
           @sprint = Sprint.find(params[:id])
           @sprint
         end
-
-        #desc "Delete sprint"
-        #delete "/:id" do
-        #  @sprint = Sprint.find(params[:id])
-        #  @sprint.destroy
-        #end
-
 
       end
 
