@@ -1,20 +1,5 @@
-# == Schema Information
-#
-# Table name: daily_rations
-#
-#  id            :integer          not null, primary key
-#  sprint_id     :integer
-#  user_id       :integer
-#  daily_menu_id :integer
-#  dish_id       :integer
-#  price         :float            not null
-#  quantity      :integer          default(1), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#
-
 ActiveAdmin.register DailyRation do
-#actions :all, :except => [:new]
+actions :all, :except => [:new]
 permit_params :price, :quantity, :user_id, :daily_menu_id, :sprint_id,
                 :dish_id
 

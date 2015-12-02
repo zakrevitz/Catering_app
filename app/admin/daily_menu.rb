@@ -1,24 +1,31 @@
-# == Schema Information
-#
-# Table name: daily_menus
-#
-#  id         :integer          not null, primary key
-#  day_number :integer          not null
-#  max_total  :float            default(100.0)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  dish_ids   :integer          default([]), is an Array
-#
-
 ActiveAdmin.register DailyMenu do
- permit_params :day_number, :max_total, dish_ids:[]
- form do |f|
-  f.inputs "Dish ids" do
-    f.input :day_number, :as => :radio, :collection => ["1", "2", "3", "4", "5", "6", "7"]
-    f.input :max_total
-    f.input :dish_ids, :as => :select, :collection => Dish.all, :input_html => {:multiple => true}
+  permit_params :day_number, :max_total, :active, dish_ids:[]
+  scope :all, :default => true
+  scope :active do |daily_menus|
+    daily_menus.where(:active => true)
   end
-  actions
- end
+  scope :pending do |daily_menus|
+    daily_menus.where(:active => false)
+  end
 
+  form do |f|
+    f.inputs "Daily Menu" do
+      f.input :day_number, :as => :radio, :collection => { 'Monday'    => 1, 
+                                                           'Tuesday'   => 2,
+                                                           'Wednesday' => 3,
+                                                           'Thursday'  => 4,
+                                                           'Friday'    => 5,
+                                                           'Saturday'  => 6,
+                                                           'Sunday'    => 7 }
+      f.input :max_total
+      f.input :dish_ids,
+                label: 'Dishes',
+                as: :select,
+                multiple: true,
+                collection: Dish.all,#option_groups_from_collection_for_select(Category.includes(:dishes), :dishes, :title, :id, :title, :id),
+                input_html: { class: 'select-two'}
+      f.input :active
+    end
+    actions
+  end
 end

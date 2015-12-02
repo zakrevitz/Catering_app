@@ -1,27 +1,5 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  name                   :string           default(""), not null
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :inet
-#  last_sign_in_ip        :inet
-#  failed_attempts        :integer          default(0), not null
-#  unlock_token           :string
-#  locked_at              :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#
 ActiveAdmin.register User do
-  
+  permit_params :name, :email, :password,:password_confirmation, :user, :admin
   controller do
     def update
       def user_params
@@ -90,20 +68,21 @@ ActiveAdmin.register User do
       row ("Admin") { status_tag (user.admin ? "Admin" : "Non-admin"), 
                                 (user.admin ? :error : :ok) }
     end
-
-    panel "Ordered Rations" do
-      table_for user.daily_rations.order(:daily_menu_id) do |daily_ration|
-        column :price
-        column :quantity
-        column "Actions" do |daily_ration|
-          link_to("Show", admin_daily_ration_path(daily_ration))
-        end
-      end
-    end
     active_admin_comments
   end
 
-  
+  sidebar "Ordered Rations for last sprint",  only: :show do
+    rations = ActiveRecord::Base.connection.execute('SELECT SUM("daily_rations"."price") as "total_price", SUM("daily_rations"."quantity") as "total_quantity" , "dishes"."title", "daily_menus"."day_number"  FROM "daily_rations" INNER JOIN "dishes" ON "dishes"."id" = "daily_rations"."dish_id" INNER JOIN "daily_menus" ON "daily_menus"."id" = "daily_rations"."daily_menu_id" WHERE "daily_rations"."user_id" = '"#{user.id}"' AND "daily_rations"."sprint_id" = '"#{Sprint.last.id}"' GROUP BY "day_number", "title","daily_rations"."daily_menu_id" ORDER BY "daily_rations"."daily_menu_id"ASC')
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    rations = rations.group_by{|x| x['day_number']}
+    rations.each do |k, v|
+      ul h3(days[k.to_i-1])
+      v.each do |dish|
+        li "#{dish['title']} x#{dish['total_price']} #{dish['total_quantity']} UAH"
+      end
+      hr
+    end
+  end
 
   create_or_edit = Proc.new {
     @user = User.where(id: params[:id]).first_or_create

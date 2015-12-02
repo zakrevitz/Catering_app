@@ -1,24 +1,16 @@
-#ActiveAdmin.register BusinessLunch do
-#permit_params :title, :price, :description, :dish_ids
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if resource.something?
-#   permitted
-# end
+ActiveAdmin.register BusinessLunch do
+  menu parent: 'Dish'
+  permit_params :category_id, :title, :price, :description, children_ids:[]
 
+  form do |f|
+    f.inputs "Business Lunch" do
+      f.input :category, :input_html => {class: 'select-two'}
+      f.input :title, as: :string
+      f.input :description, :input_html => { :class => 'autogrow', :rows => 1, :cols => 10, :maxlength => 10  }
+      f.input :price
+      f.input :children_ids, :as => :select, :collection => Dish.all, :input_html => {:multiple => true, class: 'select-two'}
+    end
+    actions
+  end
 
-
-#form do |f|
-#  f.inputs "Dish ids" do
-#    f.input :dish_ids_raw, :as => :text
-#  end
-#end
-
-#end
+end
