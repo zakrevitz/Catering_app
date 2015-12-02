@@ -8,7 +8,13 @@ Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
+  devise_for :users,  :skip => [:registration, :sessions, :password]
+  
+  as :user do
+    get "/login" => "devise/sessions#new", :as => :new_user_session
+    post "/login" => "devise/sessions#create", :as => :user_session
+    delete '/sign_out' => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
   root to: "home#index"
 
   #get 'persons/profile', as: 'user_root'
