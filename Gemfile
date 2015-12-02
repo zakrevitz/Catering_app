@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record
@@ -28,6 +27,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rack-cors', :require => 'rack/cors'
 gem 'pg', '~> 0.18.3'
 
+# Abort requests that are taking too long; an exception is raised.
+gem "rack-timeout"
+
 # API
 gem 'grape', '~> 0.13.0'
 gem 'grape_logging', '~> 1.1', '>= 1.1.2'
@@ -36,6 +38,8 @@ gem 'grape-rails-routes'
 gem 'grape_devise', '~> 0.1.1'
 gem 'swagger-ui_rails'
 
+# Bulk update to ActiveRecord DB
+gem 'activerecord-import', '~> 0.10.0'
 
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -57,18 +61,20 @@ gem 'pusher', '~> 0.14.6'
 gem 'devise', '~> 3.5', '>= 3.5.2'
 # Admin page
 gem 'activeadmin', github: 'activeadmin'
+#gem "active_admin-sortable_tree"
 # Ruby state machines
-gem 'aasm', '~> 4.3'
-
+gem 'aasm', '~> 4.5.0'
+# Hstore helper
+gem 'virtus', '~> 1.0', '>= 1.0.5'
 ###############################################################################
 # PDF generator
-#gem 'prawn'
-
+gem 'prawn'
+gem 'prawn-table', '~> 0.2.2'
 # Fills DB with random data
 #gem 'populator'
 
 # Generates random people and city names
-#gem 'faker'
+gem 'faker'
 ###############################################################################
 # Adds jquery color picker
 #gem 'jquery-minicolors-rails'
@@ -88,12 +94,17 @@ group :development, :test do
   gem 'byebug'
 end
 
+group :production do
+  gem 'puma'
+end
+
 group :test do
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'fuubar'
+  gem 'api_matchers'
 end
 
 group :development do
