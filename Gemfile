@@ -96,6 +96,8 @@ end
 
 group :production do
   gem 'puma'
+  # heroku asked me to do this
+  gem 'rails_12factor'
 end
 
 group :test do
@@ -118,3 +120,4 @@ group :development do
   gem 'spring'
 end
 
+ruby "2.2.3p173"
