@@ -5,17 +5,15 @@ module API
     version 'v1', using: :path
 
       resource :dailymenus do
-        desc "Returns sorted daily menus"
-        get "/" do
-          DailyMenu.order(id: :desc).all
+        before do
+          error!("401 Unauthorized", 401) unless user_signed_in?
         end
         
-        desc "Return dish info"
-        get "/:id" do
-          @daily_menu = DailyMenu.find(params[:id])
-          @daily_menu
+        desc "Get menus for actual sprint"
+        get '/' do
+          menus = APIHelper.get_menus(current_user.id)
+          menus ? menus : error!("Forbidden", 403)
         end
-
       end
 
   end
