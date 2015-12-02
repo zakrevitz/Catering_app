@@ -4,7 +4,7 @@ namespace :grape do
     mapped_prefix = '/api' # where mounted API in routes.rb
     params_str = ' params:'
     desc_limit = 45
-    route_info = API.routes.map {|r| [r, r.instance_variable_get(:@options)] }
+    route_info = API::Engine.routes.map {|r| [r, r.instance_variable_get(:@options)] }
     max_desc_size     = route_info.map{|_,info| (info[:description] || '')[0..desc_limit].size }.max
     max_method_size   = route_info.map{|_,info| info[:method].size }.max
     max_version_size  = route_info.map{|_,info| info[:version].size }.max
