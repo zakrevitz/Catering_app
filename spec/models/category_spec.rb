@@ -12,5 +12,27 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'is valid' do
+    it "with a title and sort order" do
+      category = FactoryGirl.build(:category)
+      expect(category).to be_valid
+    end
+  end
+  
+  context 'is invalid' do
+    it "without a title" do
+      category = FactoryGirl.build(:category, title: nil)
+      expect(category).not_to be_valid
+    end
+
+    it "without sort order" do
+      category = FactoryGirl.build(:category, sort_order: nil)
+      expect(category).not_to be_valid
+    end
+
+    it "with sort order not Integer" do
+      category = FactoryGirl.build(:category, sort_order: 10.29)
+      expect(category).not_to be_valid
+    end
+  end
 end

@@ -20,16 +20,24 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  admin                  :boolean
-#  favourite_dishes_id    :integer          default([]), is an Array
 #
+FactoryGirl.define do
+  factory :user do
+    email { Faker::Internet.email }
+    name 'Ivan'
+    password '12345678'
+    password_confirmation { '12345678'}
+    sign_in_count 0
+    failed_attempts 0
+  end
 
-require 'rails_helper'
-
-RSpec.describe User, type: :model do
-  context 'is valid' do
-    it "with a name, email and password" do
-      user = FactoryGirl.build(:user)
-      expect(user).to be_valid
-    end
+  factory :admin, class: User do
+    email { Faker::Internet.email }
+    name 'admin'
+    password '12345678'
+    password_confirmation { '12345678'}
+    sign_in_count 0
+    failed_attempts 0
+    admin true
   end
 end
