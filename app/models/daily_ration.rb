@@ -14,6 +14,16 @@
 #
 
 class DailyRation < ActiveRecord::Base
+  validates_presence_of :sprint_id, 
+                        :user_id, 
+                        :daily_menu_id,
+                        :dish_id, 
+                        :price, 
+                        :quantity
+  validates :price, numericality: { greater_than_or_equal_to: 1}
+  validates :quantity, numericality: {greater_than_or_equal_to: 1, only_integer: true }
+
+  belongs_to :dish_option
   belongs_to :sprint
   belongs_to :daily_menu
   belongs_to :dish

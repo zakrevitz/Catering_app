@@ -14,10 +14,10 @@
 #
 
 class Dish < ActiveRecord::Base
-  validates_presence_of :title, :price, :description
+  validates_presence_of :title, :price, :category_id
   validates :title, length: {maximum: 255}
-  validates :price, length: {maximum: 30}, numericality: true
-  validates :description, length: {maximum: 65536}
+  validates :price, numericality: true
+  validates :description, length: {maximum: 1024}
 
   has_many :daily_rations
   belongs_to :category

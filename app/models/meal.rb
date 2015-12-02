@@ -13,15 +13,6 @@
 #  children_ids :integer          default([]), is an Array
 #
 
-class BusinessLunch < Dish
-  before_save :sanitaze_children_ids
-
-  validates_presence_of :children_ids
-
+class Meal < Dish
   belongs_to :category
-
-  private
-    def sanitaze_children_ids
-      self.children_ids = self.children_ids.select { |dish| !dish.nil? }
-    end
 end

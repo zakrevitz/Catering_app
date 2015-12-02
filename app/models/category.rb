@@ -10,8 +10,11 @@
 #
 
 class Category < ActiveRecord::Base
+  default_scope { order('sort_order ASC') }
+  
   validates_presence_of :title, :sort_order
   validates :title, length: {maximum: 255}
+  validates :sort_order, numericality: { only_integer: true }
 
   has_many :dishes
 end

@@ -19,6 +19,8 @@
 #  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  admin                  :boolean
+#  favourite_dishes_id    :integer          default([]), is an Array
 #
 
 class User < ActiveRecord::Base
@@ -28,6 +30,6 @@ class User < ActiveRecord::Base
          :registerable,
          :recoverable, :rememberable, 
          :trackable,   :validatable, 
-         :lockable
-  has_many :daily_rations
+         :lockable,    :timeoutable
+  has_many :daily_rations, :dependent => :delete_all
 end
